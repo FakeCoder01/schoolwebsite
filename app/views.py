@@ -187,7 +187,7 @@ def newStudentProfile(request):
         
         form = studentProfileForm(request.POST, request.FILES, instance=request.user)
         
-        # if the form is valid save the user and redirects to the dashboard ('/home')
+        # if the form is valid save the user in student and redirects to the dashboard ('/home')
         if form.is_valid():
             account = student.objects.create(
                 user=request.user,
@@ -208,10 +208,12 @@ def newStudentProfile(request):
     form = studentProfileForm()        
     return render(request, 'student-profile.html', {'form':form})
 
-
+# create new student profile : url = '/new-teacher'
 def newTeacherProfile(request):
     if request.method == 'POST':
         form = teacherRegForm(request.POST, request.FILES)
+        
+        # if the form is valid save the user in teacher table and redirects to the dashboard ('/home')
         if form.is_valid():
             account = teacher.objects.create(
                 user=request.user,
@@ -226,19 +228,32 @@ def newTeacherProfile(request):
             return redirect('/home/')
         else:
             return redirect('/new-teacher?form=invalid')
+    # else render the create new teacher profile form    
     form = teacherRegForm()        
     return render(request, 'teacher-profile.html', {'form':form})    
 
-
+# the api to get a particular student or teacher details : url = ('/api/userid')
+# takes an argument userid which is the id for the users User model
 @login_required(login_url="/login/")
 def userDetails(request, userid):
     msg=''
+    
+    # checks wherever loggedin or not 
     if request.user.is_authenticated:
         if request.method == 'POST':
+            
+            # if the type in request.POST id 't', the requested user is  teacher
             if request.POST['type'] == 't':
+                # if any user with the userid exists in Usertable and teachertable
                 if teacher.objects.filter(user_id=userid, id=request.POST['profile_id']).exists() and User.objects.filter(id=userid, username=request.POST['username']).exists() :
+                    
+                    # gets the teacher profile
                     profile = teacher.objects.filter(user_id=userid, id=request.POST['profile_id'])
+                    
+                    # gets the teacher account
                     account = User.objects.filter(id=userid, username=request.POST['username'])
+                    
+                    # convert the data in json and return as a JSONResponse 
                     return JsonResponse({
                         'status': '200', 
                         'profile': list(profile.values()),
@@ -246,10 +261,19 @@ def userDetails(request, userid):
                     }) 
                 msg = msg+'No teachers exists, '     
 
+            # if the type in request.POST id 's', the requested user is  student
             elif request.POST['type'] == 's':
+                
+                # if any user with the userid exists in Usertable and studenttable
                 if student.objects.filter(user_id = userid, id=request.POST['profile_id']).exists() and User.objects.filter(id=userid, username=request.POST['username']).exists() :
+                    
+                    # gets the student profile
                     profile = student.objects.filter(user_id=userid, id=request.POST['profile_id'])
+                    
+                    # gets the student account
                     account = User.objects.filter(id=userid, username=request.POST['username'])
+                    
+                    # convert the data in json and return as a JSONResponse 
                     return JsonResponse({
                         'status': '200', 
                         'profile': list(profile.values()),
@@ -266,24 +290,36 @@ def userDetails(request, userid):
         'msg': msg,
     }), safe=False) 
 
+
+# userprofile page : url = '/profile'
 @login_required(login_url="/login/")
 def userProfile(request):
-    dp = ''
+    
+    #  checks the user is logged in or not
     if request.user.is_authenticated:
+        
         if request.method == 'POST':
+            
+            # get the form and the user
             form = userEmailForm(request.POST, instance=request.user)
+            
+            # the the userType is student update the student profile
             if request.session['user_status'].get('userType') == "Student":
                 profile_form = studentProfileForm(request.POST, request.FILES, instance=request.user.studentprofile) 
                 if form.is_valid():
+                    # updates the student model and user model
                     user_form = form.save()
                     custom_form = profile_form.save(False)
                     custom_form.user = user_form
                     custom_form.save()
                     return redirect("/profile?updated=True")
 
+            # the the userType is teacher update the teacher profile
             elif request.session['user_status'].get('userType') == "Teacher":
+                
                 profile_form = teacherRegForm(request.POST, request.FILES, instance=request.user.teacherprofile) 
                 if form.is_valid():
+                    # updates the teacher model and user model
                     user_form = form.save()
                     custom_form = profile_form.save(False)
                     custom_form.user = user_form
@@ -294,12 +330,16 @@ def userProfile(request):
                 return redirect("/login?updated=False")
 
         form = userEmailForm(instance=request.user)      
+        
+        # sets the modelForm according to the student type
         if request.session['user_status'].get('userType') == "Student":
             profile_form = studentProfileForm(instance=request.user.studentprofile)  
         elif request.session['user_status'].get('userType') == "Teacher":
             profile_form = teacherRegForm(instance=request.user.teacherprofile)  
         else:
             return redirect("/login?updated=False")
+        
+        # passes the form to the profile page
         args = {}
         args['form'] = form
         args['profile_form'] = profile_form 
