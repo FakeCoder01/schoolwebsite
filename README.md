@@ -1,5 +1,8 @@
 # schoolwebsite
 
+<html>
+
+
 <style>
   b{
   font-size : 18px;
@@ -79,3 +82,5 @@
 <b>Landing Page</b>
 
 ![Screenshot (129)](https://user-images.githubusercontent.com/97719684/182131246-5ac522e1-4e52-4593-9402-e56c1ff56a7d.png)
+
+ </html>
