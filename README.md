@@ -1,5 +1,12 @@
 # schoolwebsite
 
+<style>
+  b{
+  font-size : 18px;
+  color : green;
+  
+  }
+</style>
 
 
 <h3>live project link : <a href="https://fakecoder.pythonanywhere.com"> https://fakecoder.pythonanywhere.com </a></h3>
