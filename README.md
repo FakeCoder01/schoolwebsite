@@ -7,19 +7,19 @@
 
 
 
-<b>Teacher Dashboard Student Details API</b>
+<b>Student Dashboard Student Details API</b>
 
 ![Screenshot (135)](https://user-images.githubusercontent.com/97719684/182131224-cfa32d0e-8fc9-44d1-b452-3c89767a1f02.png)
 
 
 
-<b>Teacher Dashboard with Filter</b>
+<b>Student Dashboard with Filter</b>
 
 ![Screenshot (134)](https://user-images.githubusercontent.com/97719684/182131227-0bf911c6-9446-4283-87ae-f71785f9dce7.png)
 
 
 
-<b>Teacher Dashboard</b>
+<b>Student Dashboard</b>
 
 ![Screenshot (133)](https://user-images.githubusercontent.com/97719684/182131231-62ac5d33-cbbe-4f0d-8558-0cd43ef64dda.png)
 
