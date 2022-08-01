@@ -9,4 +9,3 @@
 ![Screenshot (131)](https://user-images.githubusercontent.com/97719684/182131238-25be0706-63d9-4257-9d94-d752f2a22506.png)
 ![Screenshot (130)](https://user-images.githubusercontent.com/97719684/182131242-b9b6e524-9049-4fa2-b294-8c289f36d38d.png)
 ![Screenshot (129)](https://user-images.githubusercontent.com/97719684/182131246-5ac522e1-4e52-4593-9402-e56c1ff56a7d.png)
-![Screenshot (128)](https://user-images.githubusercontent.com/97719684/182131254-312d71f5-d293-4f4d-bdd0-5635c810a03d.png)
