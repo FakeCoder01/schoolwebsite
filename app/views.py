@@ -10,22 +10,31 @@ import json, datetime
 
 # Create your views here.
 
-def default(o):
-    if isinstance(o, (datetime.date, datetime.datetime)):
-        return o.isoformat()
 
 
+# loads the deafult landing page : url = '/'
 def index(request):
     return render(request, 'index.html',)
 
 
+
+# loads the dashboard : url = '/home'
 @login_required(login_url='/login/')
 def homePage(request):     
+    
+    # checks if the user is logged in else redirects to the login page
     if request.user.is_authenticated:
+        
+        # checks for session in the request
+        # then get the userType from the session
         if 'user_status' in request.session and request.session['user_status'].get('isLoggedIn') == True:
             userType = request.session['user_status'].get('userType')
+            
+            # if the userType is Student then get all the students
             if userType == 'Student':
                 teachers = teacher.objects.all()
+                
+                # if there is any filter (gender or stream) then filters the students accondingly
                 if 'gender' in request.GET:
                     teachers = teachers.filter(gender=request.GET['gender'])
                 if 'stream' in request.GET:
@@ -36,10 +45,16 @@ def homePage(request):
                     'userType' : userType,
                     'search_result_count' : teachers.count()
                 }
+                
+                # return the result 
                 return render(request, 'student-dash.html', {'context':context})
-
+            
+            
+            # if the userType is Teacher then get all the teachers
             elif userType == 'Teacher':
                 students = student.objects.all()
+                
+                # if there is any filter (gender or stream) then filters the teachers accondingly
                 if 'gender' in request.GET:
                     students = students.filter(gender=request.GET['gender'])
                 if 'stream' in request.GET:
@@ -50,21 +65,34 @@ def homePage(request):
                     'userType' : userType,
                     'search_result_count' : students.count()
                 }
+                # return the result 
                 return render(request, 'teacher-dash.html', {'context':context})
             else:
                 pass  
+            
     return redirect('/login/')
 
 
+
+
+# loads the register user : url = '/reg'
 def NewUserReg(request):
+    
+    # gets the type of the request, if POST then create the user else render the create_user form
     if request.method == 'POST':
         form = userRegForm(request.POST)
+        
+        # the therequest and userRegForm is valid then create the user and login the user
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
+            
+            # login the user
             user = authenticate(request, username=username, password=password)
-
+            
+            
+            # group the user as Teachers or Students as per the form
             if request.POST['typeofuser']  == "Student": 
                 group = Group.objects.get(name='Students')
             elif request.POST['typeofuser']  == "Teacher":
@@ -72,60 +100,94 @@ def NewUserReg(request):
             else:
                 return redirect('/reg?form=invalid---type')
 
-
+            # adds the user to that group
             group.user_set.add(user)
-
+            
+            # login the user
             login(request, user)
+            
+            # sets a session with value of userType
             request.session['user_status'] = {
                 'isLoggedIn' : True,
                 'userType' : request.POST['typeofuser']
             }
+            
+            # if all succeded then redirects to the new-student or new-teacher            
             return redirect(f"/new-{request.POST['typeofuser'].lower()}/")
 
         else:
             return redirect('/reg?form=invalid')
+    # render the form    
     form = userRegForm()        
     return render(request, 'register.html', {'form':form})
 
 
+# login : url ='/login
 def userLogin(request):
+    # if the trquest is not POST render the login form
     if request.method == 'POST':
 
+        # gets the username and password
         username = request.POST['username']
         password = request.POST['password']
 
+        # finds and authenticate the user with the username, password from the form
         user = authenticate(request, username=username, password=password)
+        
+        # if a user exists with the username and password login the user
         if user is not None:
+            
+            # login the user
             login(request, user)
+            
+            # gets the group of the user and sets in the variable userType
+            # if no groups exists redirects to the login page
+            
             if user.groups.filter(name='Students').exists():
                 userType = "Student"
             elif user.groups.filter(name='Teachers').exists():
                 userType = "Teacher"
             else : 
                 return redirect('/login?form=invalid--type')
+            
+            # sets a session with value of userType
             request.session['user_status'] = {
                 'isLoggedIn' : True,
                 'userType' : userType
             }
+            
+            # redirects to the dashboard ('/home')
             return redirect('/home/')  
         else:
+            # if no user exists, the credentials are invalid and redirects to the login page
             return redirect('/login?form=invalid')
+        
+    # render the login form in the login.html   
     form = userLoginForm()        
     return render(request, 'login.html', {'form':form})
 
 
+# logout page : url = '/logout'
 def userLogOut(request):
+    # trirs to delete the session
     try :
         del request.session['user_status']
     except:
         pass    
+    # logout the user
     logout(request)
     return redirect('/')
 
 
+# create new student profile : url = '/new-student'
 def newStudentProfile(request):
+    
+    # checks the request is POST or not
     if request.method == 'POST':
+        
         form = studentProfileForm(request.POST, request.FILES, instance=request.user)
+        
+        # if the form is valid save the user and redirects to the dashboard ('/home')
         if form.is_valid():
             account = student.objects.create(
                 user=request.user,
@@ -142,6 +204,7 @@ def newStudentProfile(request):
             return redirect('/home/')
         else:
             return redirect('/new-student?form=invalid')
+    # else render the create new student profile form
     form = studentProfileForm()        
     return render(request, 'student-profile.html', {'form':form})
 
