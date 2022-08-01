@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<style>
+    #toCompleteDetail tr{
+      border: 2px solid black;
+      font-size: 16px;
+    }
+    #toCompleteDetail td, th{
+      border-right: 2px solid black;
+      font-size: 16px;
+    }
+    #toCompleteDetail td{
+      text-align: center;
+      padding: 4px;
+    }
+    #toCompleteDetail th{
+      padding: 4px;
+    }
+  </style>
+<div class="container">
+        <div class="top">
+            <h1 class="text-center">ABC School</h1>
+            <hr>
+            <h3>Total Teacher : {{context.total_teachers}}</h3>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <div>
+                <span class="h4">Available Teachers : (Result : {{context.search_result_count}}) </span>
+                <div style="float: right;">
+                    <span class="h5">Filter by :</span>
+                    <select name="gender" id="gender" onchange="searchFilter()">
+                        <option value="null" selected disabled>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+    
+                    <select name="stream" id="stream" onchange="searchFilter()">
+                        <option value="null" selected disabled>Stream</option>
+                        <option value="Science">Science</option>
+                        <option value="Arts">Arts</option>
+                        <option value="Commerce">Commerce</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <table class="table table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Stream</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teacher in context.teachers %}
+                        <tr>
+                            <td>{{teacher.full_name}}</td>
+                            <td>{{teacher.gender}}</td>
+                            <td>{{teacher.stream}}</td>
+                            <td>{{teacher.contact}}</td>
+                            <td>{{teacher.address}}</td>
+
+                            <td><a class="btn btn-primary" href="#showDetails" onclick="showDetailbyID('{{teacher.user.id}}', '{{teacher.id}}', '{{teacher.user.username}}', 't')">View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="showDetails"> {% csrf_token %}
+            <div id="userdetail" style="display: none;">
+                <button class="btn btn-danger" onclick="userdetailDivClose()" style="float: right;">Close</button>
+                <hr>
+                <table id="toCompleteDetail">
+                  <br><br> <h4 style="text-align: center;">Loading Details... </h4>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+{% endblock body %}

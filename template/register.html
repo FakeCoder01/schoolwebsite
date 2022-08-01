@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+    input[type='text'],input[type='number'], input[type='password'], input[type='email'], select, textarea{
+
+      display: block;
+      margin: auto;
+    }
+  </style>
+
+<title>Register | Web~Page</title>
+
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form action="/reg/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <strong style="font-size: 18px; border: 2px solid rgb(74, 226, 137);padding: 2px;">Type :</strong>  &nbsp; &nbsp; &nbsp;<input type="radio" id="Student" name="typeofuser" value="Student" required> 
+            <label for="Student" style="font-size: 18px;"> Student</label>
+            &nbsp; &nbsp; &nbsp;
+            <input type="radio" name="typeofuser" id="Teacher" value="Teacher" required>
+            <label for="Teacher" style="font-size: 18px;"> Teacher</label>
+            <br><br><br>
+            <input class="btn btn-primary btn-lg" type="submit" value="Sign up">
+            <br><br>
+        </form>
+        <hr>
+        <h1><a   href="/login/">Login Now</a></h1>
+    </div>
+
+</body>
+
+
+<script>
+  window.onload = function(){
+    let t_url = new URL(window.location.href);
+    if (t_url.searchParams.get("type")!=null){
+        document.getElementById(t_url.searchParams.get("type")).checked  = true;
+    }
+  }
+</script>
+
+
+</html>
+
+{% endblock body %}

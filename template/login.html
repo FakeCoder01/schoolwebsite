@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+<title>Login | Web~Page</title>
+
+{% block body %}
+
+
+    <div class="container">
+        <h1>Log in</h1><br>
+        <form action="/login/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <input class="btn btn-primary btn-lg" type="submit" value="Log in">
+        </form>
+    <hr>
+    <h1><a  href="/reg/">Create Now</a> </h1>
+    </div>
+</body>
+</html>
+
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+<title>Student | Web~Page</title>
+
+{% block body %}
+
+    <div class="container">
+        <form action="/new-student/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="btn btn-primary btn-lg" type="submit" value="Create">
+        </form>
+    </div>
+
+</body>
+</html>
+
+{% endblock body %}

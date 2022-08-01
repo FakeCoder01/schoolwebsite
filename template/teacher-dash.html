@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<style>
+  #toCompleteDetail tr{
+    border: 2px solid black;
+    font-size: 16px;
+  }
+  #toCompleteDetail td, th{
+    border-right: 2px solid black;
+    font-size: 16px;
+  }
+  #toCompleteDetail td{
+    text-align: center;
+    padding: 4px;
+  }
+  #toCompleteDetail th{
+    padding: 4px;
+  }
+</style>
+
+  <div class="container">
+    <div>
+      <h1 class="text-center">ABC School</h1>
+      <hr>
+      <h3>Total Students : {{context.total_students}}</h3>
+    </div>
+    <hr>
+    <div class="table-responsive">
+      <div>
+        <span class="h4">Available Students : (Result : {{context.search_result_count}})</span>
+        <div style="float: right;">
+          <span class="h5">Filter by :</span>
+          <select name="gender" onchange="searchFilter()" id="gender">
+            <option value="null" selected disabled>Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <select onchange="searchFilter()" name="stream" id="stream">
+            <option value="null" selected disabled>Stream</option>
+            <option value="Science">Science</option>
+            <option value="Arts">Arts</option>
+            <option value="Commerce">Commerce</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <br>
+
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr style="border-bottom: 1px solid black;">
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Standard</th>
+            <th>Stream</th>
+            <th>Roll No</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Show</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in context.students %}
+          <tr style="border-bottom: 1px solid black;">
+            <td>{{student.full_name}}</td>
+            <td>{{student.gender}}</td>
+            <td>{{student.standard}}</td>
+            <td>{{student.stream}}</td>
+            <td>{{student.roll_no}}</td>
+            <td>{{student.contact}}</td>
+            <td>{{student.address}}</td>
+            <td><a class="btn btn-primary" href="#showDetails" onclick="this.style.backgroundColor='green';showDetailbyID('{{student.user.id}}', '{{student.id}}', '{{student.user.username}}', 's')">View</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="showDetails"> {% csrf_token %}
+      <div id="userdetail" style="display: none;">
+        <button onclick="userdetailDivClose()" style="float: right;" class="btn btn-danger">Close</button>
+        <hr>
+        <table id="toCompleteDetail">
+          <br><br>
+          <h4 style="text-align: center;">Loading Details... </h4>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+{% endblock body %}

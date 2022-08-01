@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+<title>Web~Page</title>
+
+{% block body %}
+
+
+      <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    
+  .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+      min-height:200px;
+  }
+
+  /* Hide the carousel text when the screen is less than 600 pixels wide */
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; 
+    }
+  }
+
+</style>
+
+<div   id="myCarousel" class=" carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="container item active">
+        <img src="https://thumbs.dreamstime.com/b/middle-school-building-20723831.jpg" alt="Image">
+        <div class="carousel-caption">
+          <h1>ABC School</h1>
+          <p>Career happens here</p>
+        </div>      
+      </div>
+
+      <div class="item container">
+        <img src="https://thumbs.dreamstime.com/b/generic-high-school-building-streetview-facade-made-red-brick-stone-green-lawn-bushes-front-clear-33564186.jpg" alt="Image">
+        <div class="carousel-caption">
+            <h1>ABC School</h1>
+            <p>Career happens here</p>
+
+        </div>      
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarouse2" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+</div>
+  
+<div class="container text-center">    
+  <h3>What We Do</h3><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <img src="https://illustoon.com/photo/2875.png" class="img-responsive" style="width:100%" alt="Image">
+      <p>Current Project</p>
+    </div>
+    <div class="col-sm-4"> 
+      <img src="https://www.minervapark.org/sites/default/files/styles/full_node_primary/public/imageattachments/police/page/21183/school_supplies.png?itok=932JlGj1" class="img-responsive" style="width:100%" alt="Image">
+      <p>Project 2</p>    
+    </div>
+    <div class="col-sm-4">
+      <div class="well">
+       <p><a href="/reg?type=Student">Students <br> Signup</a>
+       </p>
+      </div>
+      <div class="well">
+       <a href="/reg?type=Teacher"><p>Teachers <br> Signup</p></a>
+      </div>
+    </div>
+  </div>
+</div><br>
+
+<footer class="container-fluid text-center">
+  <p>CopyRight (c) ABC School</p>
+</footer>
+
+
+</body>
+</html>
+
+{% endblock body %}
