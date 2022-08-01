@@ -1,7 +1,9 @@
 # schoolwebsite
 
 
+<b>Update Profile Page</b>
 ![Screenshot (136)](https://user-images.githubusercontent.com/97719684/182131217-cd220a14-a2a8-471c-8e0f-6140d95d2e83.png)
+<b>Teacher Dashboard</b>
 ![Screenshot (135)](https://user-images.githubusercontent.com/97719684/182131224-cfa32d0e-8fc9-44d1-b452-3c89767a1f02.png)
 ![Screenshot (134)](https://user-images.githubusercontent.com/97719684/182131227-0bf911c6-9446-4283-87ae-f71785f9dce7.png)
 ![Screenshot (133)](https://user-images.githubusercontent.com/97719684/182131231-62ac5d33-cbbe-4f0d-8558-0cd43ef64dda.png)
