@@ -1,6 +1,11 @@
 # schoolwebsite
 
 
+
+<h3>live project link : <a href="https://fakecoder.pythonanywhere.com"> https://fakecoder.pythonanywhere.com </h3>
+
+
+
 <b>Update Profile Page</b>
 
 ![Screenshot (136)](https://user-images.githubusercontent.com/97719684/182131217-cd220a14-a2a8-471c-8e0f-6140d95d2e83.png)
@@ -25,9 +30,32 @@
 
 
 
+
+
 <b>Register Page for students and teachers</b>
 
 ![Screenshot (132)](https://user-images.githubusercontent.com/97719684/182131234-0da5b43a-35a6-4c3b-9b26-33b2dc64e6ee.png)
+
+
+
+<b>Teacher Dashboard with student details API</b>
+
+![Screenshot (138)](https://user-images.githubusercontent.com/97719684/182132967-29f96923-6deb-4e83-b755-4547afeb29a1.png)
+
+
+
+<b>Teacher</b>
+
+![Screenshot (137)](https://user-images.githubusercontent.com/97719684/182132973-4dda069c-54d9-4773-a1d9-d02bbce00527.png)
+
+
+<b>TeacherProfile Page</b>
+
+![Screenshot (139)](https://user-images.githubusercontent.com/97719684/182132977-c9ce9ad3-84dd-4d69-a7fa-5fc8bab9745b.png)
+
+
+<--------->
+
 
 
 
